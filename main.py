@@ -5,13 +5,14 @@ import json
 import sys
 import credentials
 
+# Flask config
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # Websockets config
 socketio = SocketIO(app)
 
-# MySQL configuration
+# MySQL config
 MySQL_table = "nameboards"
 mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = credentials.MySQL_username
@@ -39,7 +40,7 @@ def index():
         cursor.execute(SQL_query % (MySQL_table, group_name))
         members = cursor.fetchall()
 
-        # Provide an option for big wall mounted displays (board)
+        # Provide an option for wall mounted displays (board)
         display_style = "desktop"
         if 'board' in request.args:
             display_style = "board"
@@ -132,6 +133,7 @@ def update_presence():
 
     # This is the API, toggles the state of someone through HTTP request
 
+    # Read the request
     member_name = request.args['member_name']
     group_name = request.args['group_name']
     presence = request.args['presence']
