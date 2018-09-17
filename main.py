@@ -20,7 +20,7 @@ app.config['MYSQL_DATABASE_DB'] = 'nameboards'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 conn = mysql.connect()
-cursor = conn.cursor()
+
 
 
 
@@ -38,6 +38,7 @@ def index():
 
         # Query to get all members
         SQL_query = "SELECT * FROM `%s` WHERE group_name='%s'"
+        cursor = conn.cursor()
         cursor.execute(SQL_query % (MySQL_table, group_name))
         members = cursor.fetchall()
 
@@ -63,8 +64,7 @@ def select_group():
     else:
         # The group hasn't been chosen
         SQL_query = "SELECT DISTINCT group_name FROM `%s`;"
-
-        # BUG:  There was an execution error ere
+        cursor = conn.cursor()
         cursor.execute(SQL_query % (MySQL_table))
 
         return render_template('select_group.html', group_names=cursor.fetchall() )
@@ -76,6 +76,7 @@ def delete_group():
 
     if request.method == 'POST':
         SQL_query = "DELETE FROM `%s` WHERE group_name='%s';"
+        cursor = conn.cursor()
         cursor.execute(SQL_query % (MySQL_table, request.form['group_name']))
         conn.commit()
 
@@ -92,6 +93,7 @@ def edit_members():
             # Post requests are for edition of the members, GET requests are for the UI
             if 'add_member' in request.form:
                 SQL_query = "INSERT INTO `%s` (member_name, group_name, presence) VALUES ('Unnamed member', '%s', 0);"
+                cursor = conn.cursor()
                 cursor.execute(SQL_query % (MySQL_table, group_name))
                 conn.commit()
 
@@ -101,6 +103,7 @@ def edit_members():
 
             elif 'delete_member' in request.form:
                 SQL_query = "DELETE FROM `%s` WHERE id='%s';"
+                cursor = conn.cursor()
                 cursor.execute(SQL_query % (MySQL_table, request.form['id']))
                 conn.commit()
 
@@ -110,6 +113,7 @@ def edit_members():
 
             elif 'edit_member' in request.form:
                 SQL_query = "UPDATE `%s` SET member_name='%s' WHERE id='%s';"
+                cursor = conn.cursor()
                 cursor.execute(SQL_query % (MySQL_table, request.form['member_name'], request.form['id']))
                 conn.commit()
 
@@ -124,6 +128,7 @@ def edit_members():
 
         else:
             SQL_query = "SELECT * FROM `%s` WHERE group_name='%s'"
+            cursor = conn.cursor()
             cursor.execute(SQL_query % (MySQL_table, group_name))
             return render_template('edit_members.html', group_name=group_name, members=cursor.fetchall())
     else:
@@ -143,11 +148,13 @@ def update_presence():
 
     # Update the DB according to the request
     SQL_query = "UPDATE `%s` SET presence='%s' WHERE member_name='%s' AND group_name='%s';"
+    cursor = conn.cursor()
     cursor.execute(SQL_query % (MySQL_table, presence, member_name, group_name))
     conn.commit()
 
     # Get the ID of the members that have been updated
     SQL_query = "SELECT id FROM `%s` WHERE group_name='%s' AND member_name='%s';"
+    cursor = conn.cursor()
     cursor.execute(SQL_query % (MySQL_table, group_name, member_name))
     member_ids = cursor.fetchall()
 
@@ -172,7 +179,10 @@ def handle_json(JSON_message):
     # Extract member ID from WS message
     member_id = JSON_message['id']
 
+
     # TODO: IMPROVE THIS SO AS TO HANDLE SIMULTANEOUS UPDATES OF SEVERAL FIELDS
+    cursor = conn.cursor()
+    
     if 'presence' in JSON_message:
         member_presence = JSON_message['presence']
         SQL_query = "UPDATE `%s` SET presence='%s' WHERE id='%s';";
