@@ -18,7 +18,17 @@
 
   <div class="wrapper">
 
-    {% include 'partials/header.html' %}
+    <div class="header">
+
+      <div class="full_screen_button_wrapper">
+        <input class="full_screen_button board" type="image" src="{{ url_for('static', filename='images/exit_fullscreen.png') }}"  onclick="window.location.href='?'">
+        <input class="full_screen_button desktop" type="image" src="{{ url_for('static', filename='images/fullscreen.png') }}"  onclick="window.location.href='?board'">
+      </div>
+
+      <div class="group_name_wrapper">
+        {{group_name}}
+      </div>
+    </div>
 
     <div class="main">
       <table id="members_table">
@@ -49,12 +59,9 @@
     <div class="controls">
       <input type="button" value="Edit members" onclick="window.location.href='edit_members';"><br>
       <input type="button" value="Change group" onclick="window.location.href='select_group';"><br>
-      <input type="button" value="Full screen" onclick="window.location.href='?board';">
     </div>
 
-    <div class="controls_board">
-      <input type="button" value="Close full screen" onclick="window.location.href='?';">
-    </div>
+
 
 
     {% include 'partials/footer.html' %}

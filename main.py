@@ -63,6 +63,8 @@ def select_group():
     else:
         # The group hasn't been chosen
         SQL_query = "SELECT DISTINCT group_name FROM `%s`;"
+
+        # BUG:  There was an execution error ere
         cursor.execute(SQL_query % (MySQL_table))
 
         return render_template('select_group.html', group_names=cursor.fetchall() )

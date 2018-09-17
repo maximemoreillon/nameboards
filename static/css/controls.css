@@ -1,12 +1,11 @@
-.controls, .controls_board {
-  padding: 25px;
+.controls {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
+  margin-top: 25px;
 }
 
-.controls_board {
-  /* the fullscreen button */
-  display: none;
-}
 
 /* Controls as links */
 .controls a{

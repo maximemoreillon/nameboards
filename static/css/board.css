@@ -7,6 +7,7 @@ body {
 
   margin: 0;
   width: 100%;
+  padding: 0px;
 
   box-shadow: none;
   border-radius: 0;
@@ -14,17 +15,21 @@ body {
 
 .header{
 
-  font-size: 30px; /* fallback */
-  font-size: 7vmin;
+  font-size: 90px; /* fallback */
+  font-size: 9vmin;
 
 }
 
+.full_screen_button_wrapper{
+  left: 10px;
+  top: 10px;
+}
+
 table {
-  width: 100%;
   box-shadow: none;
   border-radius: 0;
 
-  font-size: 25px; /* fallback */
+  font-size: 90px; /* fallback */
   font-size: 9vmin;
 }
 
@@ -32,9 +37,14 @@ table {
   display: none;
 }
 
-.controls_board {
+.board {
   display: block;
 }
+
+.desktop {
+  display: none;
+}
+
 
 .footer {
   display: none;

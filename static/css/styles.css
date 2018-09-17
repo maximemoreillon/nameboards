@@ -10,29 +10,56 @@ body{
 }
 
 .wrapper {
+
   background-color: white;
 
   margin: 25px auto;
-  width: 80%;
+  width: 70%;
+  padding: 25px;
 
   text-align: center;
 
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   border-radius:10px;
+
+
 }
 
 .header{
 
-  font-size: 20px; /* fallback */
+  position: relative;;
+
+  width: 100%;
+  /* Centering */
+  margin-left:auto;
+  margin-right:auto;
+
+  font-size: 40px; /* fallback */
   font-size: 5vmin;
-
-  padding: 25px;
-
 
 }
 
+.full_screen_button_wrapper{
+
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.full_screen_button{
+  width: 50px;
+  height: 50px;
+}
+
+.main {
+  width: 100%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top: 25px;
+}
+
 table {
-  width: 90%;
+  width: 100%;
 
   /* Centering table */
   margin-left:auto;
@@ -43,7 +70,7 @@ table {
   border-collapse: separate;
   border-spacing: 5px;
 
-  font-size: 20px; /* fallback */
+  font-size: 30px; /* fallback */
   font-size: 3vmin;
 
   border-radius:10px;
@@ -80,6 +107,13 @@ td {
 }
 
 
+.board {
+  display: none;
+}
+
+.desktop {
+  display: block;
+}
 
 
 input[type="text"], input[type="time"], input[type="search"], select {
