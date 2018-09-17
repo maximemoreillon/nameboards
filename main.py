@@ -2,12 +2,11 @@ from flask import Flask, session, redirect, url_for, escape, request, render_tem
 from flaskext.mysql import MySQL
 from flask_socketio import SocketIO, send, emit
 import json
-import sys
 import credentials
 
 # Flask config
 app = Flask(__name__)
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.config['SECRET_KEY'] = 'secret!'
 
 # Websockets config
 socketio = SocketIO(app)
@@ -22,6 +21,8 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 conn = mysql.connect()
 cursor = conn.cursor()
+
+
 
 
 ################
@@ -165,7 +166,6 @@ def update_presence():
 
 @socketio.on('update_member')
 def handle_json(JSON_message):
-    print('received json for update member: ' + str(JSON_message), sys.stdout)
 
     # Extract member ID from WS message
     member_id = JSON_message['id']
@@ -190,3 +190,9 @@ def handle_json(JSON_message):
 
     # Update all clients
     emit('update_member', JSON_message, broadcast=True)
+
+
+
+
+if __name__ == "__main__":
+    socketio.run(app, host='0.0.0.0')
