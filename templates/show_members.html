@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include 'partials/head.html' %}
+
+  <!-- CSS -->
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
+
+  {% if display_style == "board" %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/board.css') }}">
+  {% endif %}
+
+
+
+</head>
+<body>
+
+  <div class="wrapper">
+
+    {% include 'partials/header.html' %}
+
+    <div class="main">
+      <table id="members_table">
+
+        <tr>
+          <th>出社</th>
+          <th>氏名</th>
+          <th>行先</th>
+          <th style="display:none;">Presence</th>
+        </tr>
+
+        {% for member in members %}
+        <tr id="{{member[0]}}">
+          <td class="arrival_cell" onclick="open_arrival_edit_modal(this)">{{member[5]}}</td>
+          <td class="member_name_cell {% if member[3]==0 %}absent{% endif %}" onclick="toggle_presence(this)">
+            {{member[1]}}
+          </td>
+          <td class="location_cell" onclick="open_location_edit_modal(this)">{{member[4]}}</td>
+          <td class="presence_cell" style="display:none;"> {{member[3]}}</td> <!--presence_cell-->
+        </tr>
+        {% endfor %}
+
+      </table>
+    </div>
+
+    <!-- Buttons for navigation -->
+
+    <div class="controls">
+      <input type="button" value="Edit members" onclick="window.location.href='edit_members';"><br>
+      <input type="button" value="Change group" onclick="window.location.href='select_group';"><br>
+      <input type="button" value="Full screen" onclick="window.location.href='?board';">
+    </div>
+
+    <div class="controls_board">
+      <input type="button" value="Close full screen" onclick="window.location.href='?';">
+    </div>
+
+
+    {% include 'partials/footer.html' %}
+
+
+  </div> <!-- end of wrapper -->
+
+  <!-- Modals -->
+  <div id="location_edit_modal" class="modal">
+    <div class="modal_content">
+      <div class="modal_header">
+        Location
+      </div>
+      <div class="modal_main">
+        <input type="search" id="location_input" onkeyup="submit_location_enter()" placeholder="Location">
+        <input type="hidden" id="location_id_input">
+        <br><br>
+        <input type="button" onclick="submit_location()" value="OK">
+        <input type="button" onclick="close_modals()" value="Cancel">
+      </div>
+    </div>
+  </div>
+
+  <div id="arrival_edit_modal" class="modal">
+    <div class="modal_content">
+      <div class="modal_header">
+        Arrival time
+      </div>
+      <div class="modal_main">
+        <input type="time" id="arrival_input" onkeyup="submit_arrival_enter()">
+        <input type="hidden" id="arrival_id_input">
+        <br><br>
+        <input type="button" onclick="submit_arrival()" value="OK">
+        <input type="button" onclick="close_modals()" value="Cancel">
+      </div>
+    </div>
+  </div>
+
+  <div id="disconnected_modal" class="modal">
+    <div class="modal_content">
+      <div class="modal_header">
+        Connection lost
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script> <!-- Needed for old IE browsers -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+  <script src="{{ url_for('static', filename='js/handle_websockets.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/toggle_presence.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/location_modal.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/arrival_modal.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/modals_common.js') }}"></script>
+
+</body>
+</html>

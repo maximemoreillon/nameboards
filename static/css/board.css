@@ -1,0 +1,41 @@
+body {
+  /* Change to white when done */
+  background-color: white;
+}
+
+.wrapper {
+
+  margin: 0;
+  width: 100%;
+
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.header{
+
+  font-size: 30px; /* fallback */
+  font-size: 7vmin;
+
+}
+
+table {
+  width: 100%;
+  box-shadow: none;
+  border-radius: 0;
+
+  font-size: 25px; /* fallback */
+  font-size: 7vmin;
+}
+
+.controls {
+  display: none;
+}
+
+.controls_board {
+  display: block;
+}
+
+.footer {
+  display: none;
+}

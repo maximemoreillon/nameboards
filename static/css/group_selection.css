@@ -1,0 +1,23 @@
+input[type="text"], select {
+  width: 60%;
+  height: 50px;
+}
+
+input[type="submit"] {
+  margin-left: 10px;
+  width: 30%;
+  height: 50px;
+}
+
+form {
+  margin-left:  auto;
+  margin-right: auto;
+  margin-bottom: 25px;
+  width: 50%;
+}
+
+.main{
+
+  text-align: center;
+  padding-bottom: 25px;
+}
