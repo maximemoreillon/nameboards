@@ -3,6 +3,7 @@ from flaskext.mysql import MySQL
 from flask_socketio import SocketIO, send, emit
 import json
 import sys
+import credentials
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -13,14 +14,13 @@ socketio = SocketIO(app)
 # MySQL configuration
 MySQL_table = "nameboards"
 mysql = MySQL()
-app.config['MYSQL_DATABASE_USER'] = "moreillon"
-app.config['MYSQL_DATABASE_PASSWORD'] = "00174000"
+app.config['MYSQL_DATABASE_USER'] = credentials.MySQL_username
+app.config['MYSQL_DATABASE_PASSWORD'] = credentials.MySQL_password
 app.config['MYSQL_DATABASE_DB'] = 'nameboards'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 conn = mysql.connect()
 cursor = conn.cursor()
-# End of MySQL configuration
 
 
 ################
@@ -55,7 +55,6 @@ def index():
 def select_group():
     if request.method == 'POST':
         # The group has been chosen and now set as session variable
-
         session['group_name'] = request.form['group_name']
 
         return redirect(url_for('index'))
@@ -128,9 +127,6 @@ def edit_members():
         return redirect(url_for('select_group'))
 
 
-
-
-
 @app.route('/update_presence', methods=['GET'])
 def update_presence():
 
@@ -140,24 +136,24 @@ def update_presence():
     group_name = request.args['group_name']
     presence = request.args['presence']
 
+    # Update the DB according to the request
     SQL_query = "UPDATE `%s` SET presence='%s' WHERE member_name='%s' AND group_name='%s';"
     cursor.execute(SQL_query % (MySQL_table, presence, member_name, group_name))
     conn.commit()
 
-
+    # Get the ID of the members that have been updated
     SQL_query = "SELECT id FROM `%s` WHERE group_name='%s' AND member_name='%s';"
     cursor.execute(SQL_query % (MySQL_table, group_name, member_name))
     member_ids = cursor.fetchall()
 
     # Update all clients using WS
-    JSON_message = {}
     for member_id in member_ids:
+        JSON_message = {}
         JSON_message['id'] = member_id[0]
         JSON_message['presence'] = presence
-        print(JSON_message,sys.stdout)
-
         socketio.emit('update_member', JSON_message, broadcast=True)
 
+    # Redirect in case the request was done via browser
     return redirect(url_for('index'))
 
 
@@ -169,9 +165,10 @@ def update_presence():
 def handle_json(JSON_message):
     print('received json for update member: ' + str(JSON_message), sys.stdout)
 
+    # Extract member ID from WS message
     member_id = JSON_message['id']
 
-    # THIS IS NOT GOING TO HANDLE JSON CONTAINING MULTIPLE INFO
+    # TODO: IMPROVE THIS SO AS TO HANDLE SIMULTANEOUS UPDATES OF SEVERAL FIELDS
     if 'presence' in JSON_message:
         member_presence = JSON_message['presence']
         SQL_query = "UPDATE `%s` SET presence='%s' WHERE id='%s';";
