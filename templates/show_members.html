@@ -16,13 +16,16 @@
 
     <div class="header">
 
-      <div class="left_buttons">
-        <input class="exit_group_button desktop" type="image" src="{{ url_for('static', filename='images/exit.png') }}"  onclick="window.location.href='select_group'">
+      <div class="left_corner">
+        <!-- Logo will come here -->
+
       </div>
 
-      <div class="right_buttons">
-        <input class="full_screen_button board" type="image" src="{{ url_for('static', filename='images/exit_full_screen.png') }}"  onclick="window.location.href='?'">
-        <input class="full_screen_button desktop" type="image" src="{{ url_for('static', filename='images/enter_full_screen.png') }}"  onclick="window.location.href='?board'">
+      <div class="right_corner">
+        <input class="desktop" type="image" src="{{ url_for('static', filename='images/exit.png') }}"  onclick="window.location.href='select_group'">
+        <input class="desktop" type="image" src="{{ url_for('static', filename='images/edit.png') }}"  onclick="window.location.href='edit_members'">
+        <input class="board" type="image" src="{{ url_for('static', filename='images/exit_full_screen.png') }}"  onclick="window.location.href='?'">
+        <input class="desktop" type="image" src="{{ url_for('static', filename='images/enter_full_screen.png') }}"  onclick="window.location.href='?board'">
       </div>
 
       <div class="title_wrapper"> {{group_name}} </div>
@@ -50,11 +53,6 @@
         {% endfor %}
 
       </table>
-    </div>
-
-    <!-- Buttons for navigation -->
-    <div class="controls">
-      <input type="button" value="Edit members" onclick="window.location.href='edit_members';"><br>
     </div>
 
     {% include 'partials/footer.html' %}

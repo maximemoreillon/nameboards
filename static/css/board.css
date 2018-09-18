@@ -14,11 +14,22 @@ body {
 }
 
 
-.header input[type="image"]{
+
+
+/* THIS IS QUITE DIRTY */
+
+.header input[type="image"]:not(.desktop){
+  display: inline-block;
   margin: 20px;
   width: 50px;
   height: 50px;
 }
+
+.header input[type="image"]:not(.board){
+  display: none;
+}
+
+
 
 .header .title_wrapper {
   font-size: 90px; /* fallback */
@@ -38,13 +49,7 @@ table {
   display: none;
 }
 
-.board {
-  display: block;
-}
 
-.desktop {
-  display: none;
-}
 
 .footer {
   display: none;

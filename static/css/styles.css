@@ -31,28 +31,36 @@ body{
 
   /* set position relative for inner divs absolute */
   position: relative;
-
   text-align: center;
 
 }
 
-.header .left_buttons, .header .right_buttons{
+.header .left_corner, .header .right_corner{
   position: absolute;
 }
 
-.header .left_buttons{
+.header .left_corner{
   left: 0;
 }
 
-.header .right_buttons{
+.header .right_corner{
   right: 0;
 }
 
-.header input[type="image"]{
+/* THIS IS QUITE DIRTY */
+.header input[type="image"]:not(.board){
+  display: inline-block;
   margin: 10px;
   width: 40px;
   height: 40px;
 }
+
+.header input[type="image"]:not(.desktop){
+  display: none;
+}
+
+
+
 
 .header .title_wrapper {
   font-size: 40px; /* fallback */
@@ -116,13 +124,7 @@ td {
 }
 
 
-.board {
-  display: none;
-}
 
-.desktop {
-  display: block;
-}
 
 
 input[type="text"], input[type="time"], input[type="search"], select {
