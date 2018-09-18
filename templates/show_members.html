@@ -17,15 +17,14 @@
     <div class="header">
 
       <div class="left_corner">
-        <!-- Logo will come here -->
-
-      </div>
-
-      <div class="right_corner">
         <input class="desktop" type="image" src="{{ url_for('static', filename='images/exit.png') }}"  onclick="window.location.href='select_group'">
         <input class="desktop" type="image" src="{{ url_for('static', filename='images/edit.png') }}"  onclick="window.location.href='edit_members'">
         <input class="board" type="image" src="{{ url_for('static', filename='images/exit_full_screen.png') }}"  onclick="window.location.href='?'">
         <input class="desktop" type="image" src="{{ url_for('static', filename='images/enter_full_screen.png') }}"  onclick="window.location.href='?board'">
+      </div>
+
+      <div class="right_corner">
+
       </div>
 
       <div class="title_wrapper"> {{group_name}} </div>

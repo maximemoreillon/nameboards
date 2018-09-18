@@ -12,6 +12,16 @@
   <div class="wrapper">
 
     <div class="header">
+      <div class="left_corner">
+        <input class="desktop" type="image" src="{{ url_for('static', filename='images/back.png') }}"  onclick="window.location.href='/';">
+        <!--<input class="desktop" type="image" src="{{ url_for('static', filename='images/add.png') }}"  onclick="window.location.href='edit_members'">-->
+      </div>
+
+      <div class="right_corner">
+        
+
+      </div>
+
       <div class="title_wrapper">{{group_name}}</div>
     </div>
 
@@ -28,7 +38,6 @@
     <div class="controls">
       <form action="edit_members" method="post">
         <input type="submit" name="add_member" value="Add member"><br>
-        <input type="button" value="Return" onclick="window.location.href='/';">
       </form>
 
     </div>
