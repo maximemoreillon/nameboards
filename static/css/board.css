@@ -35,8 +35,7 @@ body {
 
 
 .header .title_wrapper {
-  font-size: 90px; /* fallback */
-  font-size: 9vmin;
+  font-size: 90px;
 }
 
 
@@ -44,8 +43,7 @@ table {
   box-shadow: none;
   border-radius: 0;
 
-  font-size: 90px; /* fallback */
-  font-size: 9vmin;
+  font-size: 90px;
 }
 
 .controls {

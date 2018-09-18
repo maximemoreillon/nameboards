@@ -11,6 +11,11 @@ function open_member_edit_modal(cell) {
 
 }
 
+function submit_add_member_form(){
+  var add_member_form = document.getElementById("add_member_form");
+  add_member_form.submit();
+}
+
 
 function close_member_edit_modal() {
   var modal = document.getElementById("member_edit_modal");

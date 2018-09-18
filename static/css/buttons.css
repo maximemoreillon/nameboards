@@ -11,8 +11,7 @@ button, input[type="button"], input[type="submit"] {
 
   width: 20%;
 
-  font-size: 20px; /* fallback */
-  font-size: 2vmin;
+  font-size: 20px;
 
   transition: background-color 100ms linear, color 50ms linear;
 
