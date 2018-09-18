@@ -16,14 +16,16 @@
 
     <div class="header">
 
-      <div class="full_screen_button_wrapper">
+      <div class="left_buttons">
+        <input class="exit_group_button desktop" type="image" src="{{ url_for('static', filename='images/exit.png') }}"  onclick="window.location.href='select_group'">
+      </div>
+
+      <div class="right_buttons">
         <input class="full_screen_button board" type="image" src="{{ url_for('static', filename='images/exit_full_screen.png') }}"  onclick="window.location.href='?'">
         <input class="full_screen_button desktop" type="image" src="{{ url_for('static', filename='images/enter_full_screen.png') }}"  onclick="window.location.href='?board'">
       </div>
 
-      <div class="group_name_wrapper">
-        {{group_name}}
-      </div>
+      <div class="title_wrapper"> {{group_name}} </div>
     </div>
 
     <div class="main">
@@ -51,10 +53,8 @@
     </div>
 
     <!-- Buttons for navigation -->
-
     <div class="controls">
       <input type="button" value="Edit members" onclick="window.location.href='edit_members';"><br>
-      <input type="button" value="Change group" onclick="window.location.href='select_group';"><br>
     </div>
 
     {% include 'partials/footer.html' %}

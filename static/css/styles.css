@@ -25,31 +25,40 @@ body{
 
 }
 
+
+/* Header related */
 .header{
 
-  position: relative;;
+  /* set position relative for inner divs absolute */
+  position: relative;
 
-  width: 100%;
-  /* Centering */
-  margin-left:auto;
-  margin-right:auto;
+  text-align: center;
 
+}
+
+.header .left_buttons, .header .right_buttons{
+  position: absolute;
+}
+
+.header .left_buttons{
+  left: 0;
+}
+
+.header .right_buttons{
+  right: 0;
+}
+
+.header input[type="image"]{
+  margin: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.header .title_wrapper {
   font-size: 40px; /* fallback */
   font-size: 5vmin;
-
 }
 
-.full_screen_button_wrapper{
-
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-.full_screen_button{
-  width: 50px;
-  height: 50px;
-}
 
 .main {
   width: 100%;
