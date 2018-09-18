@@ -21,10 +21,6 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 conn = mysql.connect()
 
-
-
-
-
 ################
 # HTTP routing #
 ################
@@ -182,7 +178,7 @@ def handle_json(JSON_message):
 
     # TODO: IMPROVE THIS SO AS TO HANDLE SIMULTANEOUS UPDATES OF SEVERAL FIELDS
     cursor = conn.cursor()
-    
+
     if 'presence' in JSON_message:
         member_presence = JSON_message['presence']
         SQL_query = "UPDATE `%s` SET presence='%s' WHERE id='%s';";
