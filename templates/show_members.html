@@ -4,14 +4,10 @@
   {% include 'partials/head.html' %}
 
   <!-- CSS -->
-
   <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
-
   {% if display_style == "board" %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/board.css') }}">
   {% endif %}
-
-
 
 </head>
 <body>
@@ -21,8 +17,8 @@
     <div class="header">
 
       <div class="full_screen_button_wrapper">
-        <input class="full_screen_button board" type="image" src="{{ url_for('static', filename='images/exit_fullscreen.png') }}"  onclick="window.location.href='?'">
-        <input class="full_screen_button desktop" type="image" src="{{ url_for('static', filename='images/fullscreen.png') }}"  onclick="window.location.href='?board'">
+        <input class="full_screen_button board" type="image" src="{{ url_for('static', filename='images/exit_full_screen.png') }}"  onclick="window.location.href='?'">
+        <input class="full_screen_button desktop" type="image" src="{{ url_for('static', filename='images/enter_full_screen.png') }}"  onclick="window.location.href='?board'">
       </div>
 
       <div class="group_name_wrapper">
@@ -61,20 +57,14 @@
       <input type="button" value="Change group" onclick="window.location.href='select_group';"><br>
     </div>
 
-
-
-
     {% include 'partials/footer.html' %}
-
 
   </div> <!-- end of wrapper -->
 
   <!-- Modals -->
   <div id="location_edit_modal" class="modal">
     <div class="modal_content">
-      <div class="modal_header">
-        Location
-      </div>
+      <div class="modal_header"> 行先 </div>
       <div class="modal_main">
         <input type="search" id="location_input" onkeyup="submit_location_enter()" placeholder="Location">
         <input type="hidden" id="location_id_input">
@@ -87,9 +77,7 @@
 
   <div id="arrival_edit_modal" class="modal">
     <div class="modal_content">
-      <div class="modal_header">
-        Arrival time
-      </div>
+      <div class="modal_header"> 出社 </div>
       <div class="modal_main">
         <input type="time" id="arrival_input" onkeyup="submit_arrival_enter()">
         <input type="hidden" id="arrival_id_input">
