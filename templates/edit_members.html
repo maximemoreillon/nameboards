@@ -2,10 +2,6 @@
 <head>
   {% include 'partials/head.html' %}
 
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/modal.css') }}">
-
-  <script src="{{ url_for('static', filename='js/member_edit_modal.js') }}"></script>
-
 </head>
 <body>
 
@@ -35,7 +31,9 @@
     </div>
 
     <!-- Form to add a member, submitted using JS -->
-    <form id="add_member_form" action="edit_members" method="post" style="display:none;"></form>
+    <form id="add_member_form" action="edit_members" method="post" style="display:none;">
+      <input type="hidden" name="add_member">
+    </form>
 
     {% include 'partials/footer.html' %}
 
@@ -58,6 +56,9 @@
       </div>
     </div>
   </div>
+
+  <!-- JS -->
+  <script src="{{ url_for('static', filename='js/member_edit_modal.js') }}"></script>
 
 </body>
 </html>
