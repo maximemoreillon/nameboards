@@ -41,22 +41,28 @@ body{
 
 .header .left_corner{
   left: 0;
+  width: auto;
+  height: auto;
 }
 
 .header .right_corner{
   right: 0;
 }
 
-/* THIS IS QUITE DIRTY */
-.header input[type="image"]:not(.board){
-  display: inline-block;
+
+.header img{
   margin: 10px;
   width: 40px;
   height: 40px;
+  cursor: pointer;
 }
 
-.header input[type="image"]:not(.desktop){
+.board{
   display: none;
+}
+
+.desktop{
+  display: inline-block;
 }
 
 
