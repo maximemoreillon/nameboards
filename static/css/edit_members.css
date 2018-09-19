@@ -1,0 +1,17 @@
+td {
+  position: relative;
+}
+
+td .member_edit_controls {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+}
+
+.member_edit_controls img {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  cursor: pointer;
+}

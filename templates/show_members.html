@@ -14,19 +14,16 @@
   <div class="wrapper">
 
     <div class="header">
-
+      <div class="title_wrapper"> {{group_name}} </div>
       <div class="left_corner">
         <img class="desktop" src="{{ url_for('static', filename='images/exit.png') }}"  onclick="window.location.href='select_group'">
         <img class="desktop" src="{{ url_for('static', filename='images/edit.png') }}"  onclick="window.location.href='edit_members'">
         <img class="board" src="{{ url_for('static', filename='images/exit_full_screen.png') }}"  onclick="window.location.href='?'">
         <img class="desktop" src="{{ url_for('static', filename='images/enter_full_screen.png') }}"  onclick="window.location.href='?board'">
       </div>
-
       <div class="right_corner">
 
       </div>
-
-      <div class="title_wrapper"> {{group_name}} </div>
     </div>
 
     <div class="main">
@@ -117,7 +114,7 @@
   <!-- JS -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script> <!-- Needed for old IE browsers -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-  
+
   <script src="{{ url_for('static', filename='js/handle_websockets.js') }}"></script>
   <script src="{{ url_for('static', filename='js/toggle_presence.js') }}"></script>
   <script src="{{ url_for('static', filename='js/location_modal.js') }}"></script>

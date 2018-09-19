@@ -3,6 +3,7 @@ from flaskext.mysql import MySQL
 from flask_socketio import SocketIO, send, emit
 import json
 import credentials
+import sys
 
 # Flask config
 app = Flask(__name__)
@@ -103,69 +104,112 @@ def delete_group():
     return redirect(url_for('select_group'))
 
 
-@app.route('/edit_members', methods=['POST', 'GET'])
+@app.route('/edit_members', methods=['GET'])
 def edit_members():
     if 'group_name' in session:
         group_name = session['group_name']
 
-        if request.method == 'POST':
-            # Post requests are for edition of the members, GET requests are for the UI
+        # Query all members
+        conn = mysql.connect()
+        cursor = conn.cursor()
 
-            conn = mysql.connect()
-            cursor = conn.cursor()
+        SQL_query = "SELECT * FROM `%s` WHERE group_name='%s'"
+        cursor.execute(SQL_query % (MySQL_table, group_name))
+        members = cursor.fetchall()
 
-            if 'add_member' in request.form:
-                SQL_query = "INSERT INTO `%s` (member_name, group_name, presence) VALUES ('Unnamed member', '%s', 0);"
-                cursor.execute(SQL_query % (MySQL_table, group_name))
-                conn.commit()
+        cursor.close()
+        conn.close()
 
-                # Sending an empty message to tell clients to refresh
-                # TODO: Refresh only the correct group
-                JSON_message = {}
-                socketio.emit('refresh', JSON_message, broadcast=True)
-
-            elif 'delete_member' in request.form:
-                SQL_query = "DELETE FROM `%s` WHERE id='%s';"
-                cursor.execute(SQL_query % (MySQL_table, request.form['id']))
-
-                # Sending an empty message to tell clients to refresh
-                JSON_message = {}
-                socketio.emit('refresh', JSON_message, broadcast=True)
-
-            elif 'edit_member' in request.form:
-                SQL_query = "UPDATE `%s` SET member_name='%s' WHERE id='%s';"
-                cursor.execute(SQL_query % (MySQL_table, request.form['member_name'], request.form['id']))
-
-                # Update all clients through WS
-                JSON_message = {}
-                JSON_message['id'] = request.form['id']
-                JSON_message['member_name'] = request.form['member_name']
-                socketio.emit('update_member', JSON_message, broadcast=True)
-
-            conn.commit()
-
-            cursor.close()
-            conn.close()
-
-            # The redirect will be in GET request
-            return redirect(url_for('edit_members'))
-
-        else:
-            # IF the request was GET, simply display all members
-            conn = mysql.connect()
-            cursor = conn.cursor()
-
-            SQL_query = "SELECT * FROM `%s` WHERE group_name='%s'"
-            cursor.execute(SQL_query % (MySQL_table, group_name))
-            members = cursor.fetchall()
-
-            cursor.close()
-            conn.close()
-
-            return render_template('edit_members.html', group_name=group_name, members=members)
+        return render_template('edit_members.html', group_name=group_name, members=members)
     else:
         # If session not set, go to select group page
         return redirect(url_for('select_group'))
+
+
+@app.route('/add_member', methods=['POST'])
+def add_member():
+    if 'group_name' in session:
+        group_name = session['group_name']
+
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
+        SQL_query = "INSERT INTO `%s` (member_name, group_name, presence) VALUES ('Unnamed member', '%s', 0);"
+        cursor.execute(SQL_query % (MySQL_table, group_name))
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        # Sending an empty message to tell clients to refresh
+        # TODO: Refresh only the correct group
+        JSON_message = {}
+        socketio.emit('refresh', JSON_message, broadcast=True)
+
+        # The redirect will be in GET request
+        return redirect(url_for('edit_members'))
+    else:
+        # If session not set, go to select group page
+        return redirect(url_for('select_group'))
+
+
+@app.route('/delete_member', methods=['POST'])
+def delete_member():
+    if 'group_name' in session:
+        group_name = session['group_name']
+
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
+        SQL_query = "DELETE FROM `%s` WHERE id='%s';"
+        cursor.execute(SQL_query % (MySQL_table, request.form['id']))
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        # Sending an empty message to tell clients to refresh
+        # TODO: Refresh only the correct group
+        JSON_message = {}
+        socketio.emit('refresh', JSON_message, broadcast=True)
+
+        # The redirect will be in GET request
+        return redirect(url_for('edit_members'))
+    else:
+        # If session not set, go to select group page
+        return redirect(url_for('select_group'))
+
+
+@app.route('/edit_member', methods=['POST'])
+def edit_member():
+
+    if 'group_name' in session:
+        group_name = session['group_name']
+
+        conn = mysql.connect()
+        cursor = conn.cursor()
+
+        SQL_query = "UPDATE `%s` SET member_name='%s' WHERE id='%s';"
+        cursor.execute(SQL_query % (MySQL_table, request.form['member_name'], request.form['id']))
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        # Update all clients through WS
+        JSON_message = {}
+        JSON_message['id'] = request.form['id']
+        JSON_message['member_name'] = request.form['member_name']
+        socketio.emit('update_member', JSON_message, broadcast=True)
+
+        # The redirect will be in GET request
+        return redirect(url_for('edit_members'))
+    else:
+        # If session not set, go to select group page
+        return redirect(url_for('select_group'))
+
+
+
 
 
 @app.route('/update_presence', methods=['GET'])
