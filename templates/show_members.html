@@ -4,7 +4,6 @@
   {% include 'partials/head.html' %}
 
   <!-- Additional CSS -->
-
   {% if display_style == "board" %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/board.css') }}">
   {% endif %}
@@ -118,6 +117,7 @@
   <!-- JS -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script> <!-- Needed for old IE browsers -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+  
   <script src="{{ url_for('static', filename='js/handle_websockets.js') }}"></script>
   <script src="{{ url_for('static', filename='js/toggle_presence.js') }}"></script>
   <script src="{{ url_for('static', filename='js/location_modal.js') }}"></script>
