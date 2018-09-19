@@ -28,3 +28,8 @@ button:active, input[type="button"]:active, input[type="submit"]:active {
   color: white;
   background-color: #666666;
 }
+
+select {
+  width: 60%;
+  height: 50px;
+}
