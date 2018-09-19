@@ -63,7 +63,14 @@
     <div class="modal_content">
       <div class="modal_header"> 行先 </div>
       <div class="modal_main">
-        <input type="search" id="location_input" onkeyup="submit_location_enter()" placeholder="Location">
+        <input type="text" id="location_input" list="location_input_candidates" onkeyup="submit_location_enter()" placeholder="Location">
+
+        <datalist id="location_input_candidates" style="display:none;">
+          {% for location in locations %}
+          <option value="{{location[0]}}">
+          {% endfor %}
+        </datalist>
+
         <input type="hidden" id="location_id_input">
         <br><br>
         <input type="button" onclick="submit_location()" value="OK">

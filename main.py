@@ -38,12 +38,18 @@ def index():
         cursor.execute(SQL_query % (MySQL_table, group_name))
         members = cursor.fetchall()
 
+        # Query all locations for autocomplete
+        SQL_query = "SELECT DISTINCT location FROM `%s`;"
+        cursor = conn.cursor()
+        cursor.execute(SQL_query % (MySQL_table))
+        locations = cursor.fetchall();
+
         # Provide an option for wall mounted displays (board)
         display_style = "desktop"
         if 'board' in request.args:
             display_style = "board"
 
-        return render_template('show_members.html', display_style=display_style, group_name=group_name, members=members)
+        return render_template('show_members.html', display_style=display_style, group_name=group_name, members=members, locations=locations)
 
     else:
         # If the group is not selected, redirect to group selection

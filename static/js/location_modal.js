@@ -4,7 +4,7 @@ function open_location_edit_modal(cell) {
   var location_input = document.getElementById("location_input");
   var location_id_input = document.getElementById("location_id_input");
 
-  location_input.value=cell.innerText;
+  //location_input.value=cell.innerText;
   location_id_input.value=cell.parentNode.id;
 
   modal.style.display = "block";
