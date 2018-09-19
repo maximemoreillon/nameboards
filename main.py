@@ -19,7 +19,7 @@ app.config['MYSQL_DATABASE_PASSWORD'] = credentials.MySQL_password
 app.config['MYSQL_DATABASE_DB'] = 'nameboards'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
-conn = mysql.connect()
+conn=mysql.connect()
 
 ################
 # HTTP routing #
@@ -33,16 +33,17 @@ def index():
         group_name = session['group_name']
 
         # Query to get all members
-        SQL_query = "SELECT * FROM `%s` WHERE group_name='%s'"
         cursor = conn.cursor()
+        SQL_query = "SELECT * FROM `%s` WHERE group_name='%s'"
         cursor.execute(SQL_query % (MySQL_table, group_name))
         members = cursor.fetchall()
 
         # Query all locations for autocomplete
         SQL_query = "SELECT DISTINCT location FROM `%s`;"
-        cursor = conn.cursor()
         cursor.execute(SQL_query % (MySQL_table))
         locations = cursor.fetchall();
+        cursor.close()
+
 
         # Provide an option for wall mounted displays (board)
         display_style = "desktop"
@@ -65,11 +66,13 @@ def select_group():
         return redirect(url_for('index'))
     else:
         # The group hasn't been chosen
-        SQL_query = "SELECT DISTINCT group_name FROM `%s`;"
         cursor = conn.cursor()
+        SQL_query = "SELECT DISTINCT group_name FROM `%s`;"
         cursor.execute(SQL_query % (MySQL_table))
+        group_names = cursor.fetchall()
+        cursor.close()
 
-        return render_template('select_group.html', group_names=cursor.fetchall() )
+        return render_template('select_group.html', group_names=group_names )
 
 @app.route('/delete_group', methods=['POST', 'GET'])
 def delete_group():
@@ -77,8 +80,8 @@ def delete_group():
     # WARNING: This might not require its own route
 
     if request.method == 'POST':
-        SQL_query = "DELETE FROM `%s` WHERE group_name='%s';"
         cursor = conn.cursor()
+        SQL_query = "DELETE FROM `%s` WHERE group_name='%s';"
         cursor.execute(SQL_query % (MySQL_table, request.form['group_name']))
         conn.commit()
 
@@ -94,30 +97,33 @@ def edit_members():
         if request.method == 'POST':
             # Post requests are for edition of the members, GET requests are for the UI
             if 'add_member' in request.form:
-                SQL_query = "INSERT INTO `%s` (member_name, group_name, presence) VALUES ('Unnamed member', '%s', 0);"
                 cursor = conn.cursor()
+                SQL_query = "INSERT INTO `%s` (member_name, group_name, presence) VALUES ('Unnamed member', '%s', 0);"
                 cursor.execute(SQL_query % (MySQL_table, group_name))
                 conn.commit()
+                cursor.close()
 
                 # Sending an empty message to tell clients to refresh
                 JSON_message = {}
                 socketio.emit('refresh', JSON_message, broadcast=True)
 
             elif 'delete_member' in request.form:
-                SQL_query = "DELETE FROM `%s` WHERE id='%s';"
                 cursor = conn.cursor()
+                SQL_query = "DELETE FROM `%s` WHERE id='%s';"
                 cursor.execute(SQL_query % (MySQL_table, request.form['id']))
                 conn.commit()
+                cursor.close()
 
                 # Sending an empty message to tell clients to refresh
                 JSON_message = {}
                 socketio.emit('refresh', JSON_message, broadcast=True)
 
             elif 'edit_member' in request.form:
-                SQL_query = "UPDATE `%s` SET member_name='%s' WHERE id='%s';"
                 cursor = conn.cursor()
+                SQL_query = "UPDATE `%s` SET member_name='%s' WHERE id='%s';"
                 cursor.execute(SQL_query % (MySQL_table, request.form['member_name'], request.form['id']))
                 conn.commit()
+                cursor.close()
 
                 # Update all clients through WS
                 JSON_message = {}
@@ -129,10 +135,13 @@ def edit_members():
             return redirect(url_for('edit_members'))
 
         else:
-            SQL_query = "SELECT * FROM `%s` WHERE group_name='%s'"
+            # IF the request was GET, simply display all members
             cursor = conn.cursor()
+            SQL_query = "SELECT * FROM `%s` WHERE group_name='%s'"
             cursor.execute(SQL_query % (MySQL_table, group_name))
-            return render_template('edit_members.html', group_name=group_name, members=cursor.fetchall())
+            members = cursor.fetchall()
+            cursor.close()
+            return render_template('edit_members.html', group_name=group_name, members=members)
     else:
         # If session not set, go to select group page
         return redirect(url_for('select_group'))
@@ -149,16 +158,16 @@ def update_presence():
     presence = request.args['presence']
 
     # Update the DB according to the request
-    SQL_query = "UPDATE `%s` SET presence='%s' WHERE member_name='%s' AND group_name='%s';"
     cursor = conn.cursor()
+    SQL_query = "UPDATE `%s` SET presence='%s' WHERE member_name='%s' AND group_name='%s';"
     cursor.execute(SQL_query % (MySQL_table, presence, member_name, group_name))
     conn.commit()
 
     # Get the ID of the members that have been updated
     SQL_query = "SELECT id FROM `%s` WHERE group_name='%s' AND member_name='%s';"
-    cursor = conn.cursor()
     cursor.execute(SQL_query % (MySQL_table, group_name, member_name))
     member_ids = cursor.fetchall()
+    cursor.close()
 
     # Update all clients using WS
     for member_id in member_ids:
@@ -201,12 +210,16 @@ def handle_json(JSON_message):
         cursor.execute(SQL_query % (MySQL_table, member_location, member_id))
 
     conn.commit()
+    cursor.close()
 
     # Update all clients
     emit('update_member', JSON_message, broadcast=True)
 
 
 
+################################
+## Execution as python script ##
+################################
 
 if __name__ == "__main__":
     socketio.run(app, host='0.0.0.0')
