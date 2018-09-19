@@ -14,6 +14,11 @@ function open_member_edit_modal(id) {
 
 }
 
+function submit_edit_member_form(){
+  var edit_member_form = document.getElementById("edit_member_form");
+  edit_member_form.submit();
+}
+
 function submit_delete_member_form(id) {
 
   var delete_member_form = document.getElementById("delete_member_form");

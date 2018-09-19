@@ -14,7 +14,6 @@
       <div class="title_wrapper"> {{group_name}} </div>
       <div class="left_corner">
         <img class="desktop" src="{{ url_for('static', filename='images/back.png') }}" onclick="window.location.href='/';">
-        <img class="desktop" src="{{ url_for('static', filename='images/add.png') }}" onclick="submit_add_member_form()">
       </div>
 
     </div>
@@ -35,19 +34,24 @@
       </table>
     </div>
 
-    <!-- Form to add a member, submitted using JS -->
-    <form id="add_member_form" action="add_member" method="post" style="display:none;">
+    <div class="controls">
+      <img class="desktop" src="{{ url_for('static', filename='images/add.png') }}" onclick="submit_add_member_form()">
+    </div>
 
-    </form>
-
-    <!-- Form to delete one member -->
-    <form id="delete_member_form" action="delete_member" method="post" style="display:none;">
-      <input type="hidden" name="id" id="delete_member_id_input" >
-    </form>
 
     {% include 'partials/footer.html' %}
 
   </div> <!-- end of wrapper -->
+
+  <!-- Form to add a member, submitted using JS -->
+  <form id="add_member_form" action="add_member" method="post" style="display:none;">
+
+  </form>
+
+  <!-- Form to delete one member -->
+  <form id="delete_member_form" action="delete_member" method="post" style="display:none;">
+    <input type="hidden" name="id" id="delete_member_id_input" >
+  </form>
 
   <!-- Modal to edit a member -->
   <div id="member_edit_modal" class="modal">
@@ -56,13 +60,18 @@
         Edit member
       </div>
       <div class="modal_main">
-        <form action="edit_member" method="post">
+        <form id="edit_member_form" action="edit_member" method="post">
           <input type="search" name="member_name" id="member_name_input">
           <input type="hidden" name="id" id="member_id_input" >
-          <br><br>
-          <input type="submit" value="Apply">
-          <input type="button" onclick="close_member_edit_modal()" value="Cancel">
         </form>
+        <div class="controls">
+          <!--
+          <img src="{{ url_for('static', filename='images/ok.png') }}" onclick="submit_edit_member_form()">
+          <img src="{{ url_for('static', filename='images/back.png') }}" onclick="close_member_edit_modal()">
+          -->
+          <input type="button" value="OK" onclick="submit_edit_member_form()">
+          <input type="button" value="Cancel" onclick="close_member_edit_modal()">
+        </div>
       </div>
     </div>
   </div>

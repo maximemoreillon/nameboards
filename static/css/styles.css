@@ -39,7 +39,9 @@ body{
 }
 
 .header .left_corner, .header .right_corner{
+  /* Weird stuff because of IE */
   text-align: left;
+
   position: absolute;
   top: 0;
 }
@@ -52,20 +54,40 @@ body{
   right: 0;
 }
 
-
-.header img{
+.header img, .controls img{
 
   width: 40px;
   height: 40px;
 
-  /* set distance between buttons */
-  margin-right: 10px;
+  padding: 10px;
 
   cursor: pointer;
-
-  padding: 10px;
   border-radius:10px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.header img:hover, .controls img:hover{
+
+  background-color: #cccccc;
+}
+
+.left_corner img {
+  /* set distance between buttons */
+  margin-right: 10px;
+}
+
+.right_corner img {
+  /* set distance between buttons */
+  margin-left: 10px;
+}
+
+.controls img{
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.controls{
+  margin-top: 25px;
 }
 
 .board{
@@ -140,10 +162,6 @@ th, td {
   background-color: #ce0000;
   color: white;
 }
-
-
-
-
 
 input[type="text"], input[type="time"], input[type="search"], select {
   font-size: 20px;

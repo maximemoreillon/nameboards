@@ -83,6 +83,7 @@ def select_group():
 
         return render_template('select_group.html', group_names=group_names )
 
+
 @app.route('/delete_group', methods=['POST', 'GET'])
 def delete_group():
 
