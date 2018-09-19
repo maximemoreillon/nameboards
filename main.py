@@ -87,8 +87,6 @@ def select_group():
 @app.route('/delete_group', methods=['POST', 'GET'])
 def delete_group():
 
-    # WARNING: This might not require its own route
-
     if request.method == 'POST':
 
         conn = mysql.connect()
@@ -176,6 +174,7 @@ def delete_member():
 
         # The redirect will be in GET request
         return redirect(url_for('edit_members'))
+
     else:
         # If session not set, go to select group page
         return redirect(url_for('select_group'))
@@ -205,6 +204,7 @@ def edit_member():
 
         # The redirect will be in GET request
         return redirect(url_for('edit_members'))
+
     else:
         # If session not set, go to select group page
         return redirect(url_for('select_group'))
@@ -218,6 +218,8 @@ def update_presence():
 
     # This is the API, toggles the state of someone through HTTP request
 
+    #TODO Input sanitation
+    
     # Read the request
     member_name = request.args['member_name']
     group_name = request.args['group_name']
@@ -246,8 +248,7 @@ def update_presence():
         JSON_message['presence'] = presence
         socketio.emit('update_member', JSON_message, broadcast=True)
 
-    # Redirect in case the request was done via browser
-    return redirect(url_for('index'))
+    return presence
 
 
 ######
@@ -260,10 +261,10 @@ def handle_json(JSON_message):
     # Extract member ID from WS message
     member_id = JSON_message['id']
 
-
-    # TODO: IMPROVE THIS SO AS TO HANDLE SIMULTANEOUS UPDATES OF SEVERAL FIELDS
     conn = mysql.connect()
     cursor = conn.cursor()
+
+    # TODO: IMPROVE THIS SO AS TO HANDLE SIMULTANEOUS UPDATES OF SEVERAL FIELDS
 
     if 'presence' in JSON_message:
         member_presence = JSON_message['presence']
