@@ -183,6 +183,8 @@ def delete_member():
 @app.route('/edit_member', methods=['POST'])
 def edit_member():
 
+    # Todo: There should be a WS method for this too
+
     if 'group_name' in session:
         group_name = session['group_name']
 
@@ -219,7 +221,7 @@ def update_presence():
     # This is the API, toggles the state of someone through HTTP request
 
     #TODO Input sanitation
-    
+
     # Read the request
     member_name = request.args['member_name']
     group_name = request.args['group_name']
@@ -280,6 +282,11 @@ def handle_json(JSON_message):
         member_location = JSON_message['location']
         SQL_query = "UPDATE `%s` SET location='%s' WHERE id='%s';";
         cursor.execute(SQL_query % (MySQL_table, member_location, member_id))
+
+    if 'member_name' in JSON_message:
+        member_name = JSON_message['member_name']
+        SQL_query = "UPDATE `%s` SET member_name='%s' WHERE id='%s';";
+        cursor.execute(SQL_query % (MySQL_table, member_name, member_id))
 
     conn.commit()
 

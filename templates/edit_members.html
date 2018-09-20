@@ -1,10 +1,6 @@
 <html>
 <head>
   {% include 'partials/head.html' %}
-
-  <!-- Additional CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/edit_members.css') }}">
-
 </head>
 <body>
 
@@ -21,7 +17,7 @@
     <div class="main">
       <table id="members_table">
         {% for member in members %}
-        <tr id="{{member[0]}}" onclick="open_member_edit_modal({{member[0]}}">
+        <tr id="{{member[0]}}" class="member_name_cell">
           <td onclick="open_member_edit_modal({{member[0]}})">
             {{member[1]}}
           </td>
