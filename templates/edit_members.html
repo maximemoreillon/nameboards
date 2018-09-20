@@ -21,13 +21,9 @@
     <div class="main">
       <table id="members_table">
         {% for member in members %}
-        <tr id="{{member[0]}}">
-          <td>
+        <tr id="{{member[0]}}" onclick="open_member_edit_modal({{member[0]}}">
+          <td onclick="open_member_edit_modal({{member[0]}})">
             {{member[1]}}
-            <div class="member_edit_controls">
-              <img src="{{ url_for('static', filename='images/edit.png') }}"  onclick="open_member_edit_modal({{member[0]}})">
-              <img src="{{ url_for('static', filename='images/delete.png') }}"  onclick="submit_delete_member_form({{member[0]}})">
-            </div>
           </td>
         </tr>
         {% endfor %}
@@ -60,18 +56,14 @@
         Edit member
       </div>
       <div class="modal_main">
-        <form id="edit_member_form" action="edit_member" method="post">
+        <form action="edit_member" method="post">
           <input type="search" name="member_name" id="member_name_input">
           <input type="hidden" name="id" id="member_id_input" >
+          <br><br>
+          <input type="submit" value="Rename">
+          <input type="button" onclick="close_member_edit_modal()" value="Cancel">
+          <input type="button" onclick="submit_delete_member_form()" value="Delete">
         </form>
-        <div class="controls">
-          <!--
-          <img src="{{ url_for('static', filename='images/ok.png') }}" onclick="submit_edit_member_form()">
-          <img src="{{ url_for('static', filename='images/back.png') }}" onclick="close_member_edit_modal()">
-          -->
-          <input type="button" value="OK" onclick="submit_edit_member_form()">
-          <input type="button" value="Cancel" onclick="close_member_edit_modal()">
-        </div>
       </div>
     </div>
   </div>

@@ -4,11 +4,13 @@ function open_member_edit_modal(id) {
 
   var member_name_input = document.getElementById("member_name_input");
   var member_id_input = document.getElementById("member_id_input");
+  var delete_member_id_input = document.getElementById("delete_member_id_input");
 
   var row = document.getElementById(id);
 
   member_name_input.value = row.cells[0].innerText;
   member_id_input.value = id;
+  delete_member_id_input.value = id;
 
   modal.style.display = "block";
 
@@ -20,11 +22,7 @@ function submit_edit_member_form(){
 }
 
 function submit_delete_member_form(id) {
-
   var delete_member_form = document.getElementById("delete_member_form");
-  var delete_member_id_input = document.getElementById("delete_member_id_input");
-
-  delete_member_id_input.value = id;
   delete_member_form.submit();
 }
 
