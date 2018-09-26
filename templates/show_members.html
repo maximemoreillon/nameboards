@@ -62,9 +62,18 @@
         <input type="text" id="location_input" list="location_input_candidates" onkeyup="submit_location_enter()" placeholder="Location">
 
         <datalist id="location_input_candidates" style="display:none;">
+          <option value="OCR">
+          <option value="3632">
+          <option value="3629">
+          <option value="伊賀">
+          <option value="年休">
+
+          <!--
           {% for location in locations %}
           <option value="{{location[0]}}">
           {% endfor %}
+          -->
+
         </datalist>
 
         <input type="hidden" id="location_id_input">

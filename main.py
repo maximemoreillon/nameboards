@@ -13,7 +13,6 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
 # MySQL config
-MySQL_table = "nameboards"
 mysql = MySQL()
 app.config['MYSQL_DATABASE_USER'] = credentials.MySQL_username
 app.config['MYSQL_DATABASE_PASSWORD'] = credentials.MySQL_password
@@ -37,13 +36,11 @@ def index():
         conn = mysql.connect()
         cursor = conn.cursor()
 
-        SQL_query = "SELECT * FROM `%s` WHERE group_name='%s'"
-        cursor.execute(SQL_query % (MySQL_table, group_name))
+        cursor.execute("""SELECT * FROM nameboards WHERE group_name=%s""", group_name)
         members = cursor.fetchall()
 
         # Query all locations for autocomplete
-        SQL_query = "SELECT DISTINCT location FROM `%s`;"
-        cursor.execute(SQL_query % (MySQL_table))
+        cursor.execute("""SELECT DISTINCT location FROM nameboards""")
         locations = cursor.fetchall();
 
         cursor.close()
@@ -73,11 +70,8 @@ def select_group():
         # The group hasn't been chosen
         conn = mysql.connect()
         cursor = conn.cursor()
-
-        SQL_query = "SELECT DISTINCT group_name FROM `%s`;"
-        cursor.execute(SQL_query % (MySQL_table))
+        cursor.execute("""SELECT DISTINCT group_name FROM nameboards""")
         group_names = cursor.fetchall()
-
         cursor.close()
         conn.close()
 
@@ -91,11 +85,8 @@ def delete_group():
 
         conn = mysql.connect()
         cursor = conn.cursor()
-
-        SQL_query = "DELETE FROM `%s` WHERE group_name='%s';"
-        cursor.execute(SQL_query % (MySQL_table, request.form['group_name']))
+        cursor.execute("""DELETE FROM nameboards WHERE group_name=%s""", request.form['group_name'])
         conn.commit()
-
         cursor.close()
         conn.close()
 
@@ -111,11 +102,8 @@ def edit_members():
         # Query all members
         conn = mysql.connect()
         cursor = conn.cursor()
-
-        SQL_query = "SELECT * FROM `%s` WHERE group_name='%s'"
-        cursor.execute(SQL_query % (MySQL_table, group_name))
+        cursor.execute("""SELECT * FROM nameboards WHERE group_name=%s""", group_name)
         members = cursor.fetchall()
-
         cursor.close()
         conn.close()
 
@@ -133,8 +121,7 @@ def add_member():
         conn = mysql.connect()
         cursor = conn.cursor()
 
-        SQL_query = "INSERT INTO `%s` (member_name, group_name, presence) VALUES ('Unnamed member', '%s', 0);"
-        cursor.execute(SQL_query % (MySQL_table, group_name))
+        cursor.execute("""INSERT INTO nameboards (member_name, group_name, presence) VALUES ('Unnamed member', '%s', 0)""", group_name)
         conn.commit()
 
         cursor.close()
@@ -160,8 +147,7 @@ def delete_member():
         conn = mysql.connect()
         cursor = conn.cursor()
 
-        SQL_query = "DELETE FROM `%s` WHERE id='%s';"
-        cursor.execute(SQL_query % (MySQL_table, request.form['id']))
+        cursor.execute("""DELETE FROM nameboards WHERE id=%s""", request.form['id'] )
         conn.commit()
 
         cursor.close()
@@ -191,8 +177,7 @@ def edit_member():
         conn = mysql.connect()
         cursor = conn.cursor()
 
-        SQL_query = "UPDATE `%s` SET member_name='%s' WHERE id='%s';"
-        cursor.execute(SQL_query % (MySQL_table, request.form['member_name'], request.form['id']))
+        cursor.execute("""UPDATE nameboards SET member_name=%s WHERE id=%s""", (request.form['member_name'], request.form['id']) )
         conn.commit()
 
         cursor.close()
@@ -211,10 +196,6 @@ def edit_member():
         # If session not set, go to select group page
         return redirect(url_for('select_group'))
 
-
-
-
-
 @app.route('/update_presence', methods=['GET'])
 def update_presence():
 
@@ -231,13 +212,11 @@ def update_presence():
     conn = mysql.connect()
     cursor = conn.cursor()
 
-    SQL_query = "UPDATE `%s` SET presence='%s' WHERE member_name='%s' AND group_name='%s';"
-    cursor.execute(SQL_query % (MySQL_table, presence, member_name, group_name))
+    cursor.execute("""UPDATE nameboards SET presence=%s WHERE member_name=%s AND group_name=%s""", (presence, member_name, group_name))
     conn.commit()
 
     # Get the ID of the members that have been updated
-    SQL_query = "SELECT id FROM `%s` WHERE group_name='%s' AND member_name='%s';"
-    cursor.execute(SQL_query % (MySQL_table, group_name, member_name))
+    cursor.execute("""SELECT id FROM nameboards WHERE group_name=%s AND member_name=%s""", (group_name, member_name))
     member_ids = cursor.fetchall()
 
     cursor.close()
@@ -266,30 +245,22 @@ def handle_json(JSON_message):
     conn = mysql.connect()
     cursor = conn.cursor()
 
-    # TODO: IMPROVE THIS SO AS TO HANDLE SIMULTANEOUS UPDATES OF SEVERAL FIELDS
+    # Get current attributes of a member
+    cursor.execute("""SELECT member_name, presence, arrival, location FROM nameboards WHERE id=%s""", member_id)
+    result = cursor.fetchone()
+    row_headers = [x[0] for x in cursor.description]
+    current_attributes = dict(zip(row_headers,result))
 
-    if 'presence' in JSON_message:
-        member_presence = JSON_message['presence']
-        SQL_query = "UPDATE `%s` SET presence='%s' WHERE id='%s';";
-        cursor.execute(SQL_query % (MySQL_table, member_presence, member_id))
+    # Substitute the attributes by the JSON_message's attributes
+    for attribute in JSON_message:
+        if attribute != "id":
+            current_attributes[attribute] = JSON_message[attribute]
 
-    if 'arrival' in JSON_message:
-        member_arrival = JSON_message['arrival']
-        SQL_query = "UPDATE `%s` SET arrival='%s' WHERE id='%s';";
-        cursor.execute(SQL_query % (MySQL_table, member_arrival, member_id))
-
-    if 'location' in JSON_message:
-        member_location = JSON_message['location']
-        SQL_query = "UPDATE `%s` SET location='%s' WHERE id='%s';";
-        cursor.execute(SQL_query % (MySQL_table, member_location, member_id))
-
-    if 'member_name' in JSON_message:
-        member_name = JSON_message['member_name']
-        SQL_query = "UPDATE `%s` SET member_name='%s' WHERE id='%s';";
-        cursor.execute(SQL_query % (MySQL_table, member_name, member_id))
+    # Update the member with its new information
+    cursor.execute("""UPDATE nameboards SET member_name=%s,presence=%s,location=%s,arrival=%s WHERE id=%s""", (
+        current_attributes['member_name'], current_attributes['presence'], current_attributes['location'], current_attributes['arrival'], member_id))
 
     conn.commit()
-
     cursor.close()
     conn.close()
 
