@@ -39,10 +39,6 @@ def index():
         cursor.execute("""SELECT * FROM nameboards WHERE group_name=%s""", group_name)
         members = cursor.fetchall()
 
-        # Query all locations for autocomplete
-        cursor.execute("""SELECT DISTINCT location FROM nameboards""")
-        locations = cursor.fetchall();
-
         cursor.close()
         conn.close()
 
@@ -52,7 +48,7 @@ def index():
         if 'board' in request.args:
             display_style = "board"
 
-        return render_template('show_members.html', display_style=display_style, group_name=group_name, members=members, locations=locations)
+        return render_template('show_members.html', display_style=display_style, group_name=group_name, members=members)
 
     else:
         # If the group is not selected, redirect to group selection
