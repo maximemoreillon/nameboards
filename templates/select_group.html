@@ -1,10 +1,6 @@
 <html>
 <head>
   {% include 'partials/head.html' %}
-
-  <!-- Additional CSS -->
-
-
 </head>
 <body>
 
@@ -15,9 +11,6 @@
     </div>
 
     <div class="main">
-
-
-
       <select id="group_select">
         {% for group_name in group_names %}
           <option value="{{group_name[0]}}">{{group_name[0]}}</option>
@@ -25,16 +18,9 @@
       </select>
 
       <div class="controls">
-        <!--
-        <img src="{{ url_for('static', filename='images/ok.png') }}" onclick="select_group()">
-        <img src="{{ url_for('static', filename='images/add.png') }}" onclick="open_create_group_modal()">
-        <img src="{{ url_for('static', filename='images/delete.png') }}" onclick="open_delete_group_modal()">
-        -->
-
         <input type="button" value="Select" onclick="select_group()">
         <input type="button" value="Create new" onclick="open_create_group_modal()">
         <input type="button" value="Delete" onclick="open_delete_group_modal()">
-
       </div>
     </div> <!-- End of main -->
 
@@ -59,11 +45,6 @@
           <input type="text" name="group_name" placeholder="New group name">
         </form>
         <div class="controls">
-          <!--
-          <img src="{{ url_for('static', filename='images/ok.png') }}" onclick="submit_create_group_form()">
-          <img src="{{ url_for('static', filename='images/back.png') }}" onclick="close_modals()">
-          -->
-
           <input type="button" value="OK" onclick="submit_create_group_form()">
           <input type="button" value="Cancel" onclick="close_modals()">
         </div>
@@ -77,15 +58,8 @@
       <div class="modal_header"> Confirm delete group? </div>
       <div class="modal_main">
         <div class="controls">
-          <!--
-          <img src="{{ url_for('static', filename='images/ok.png') }}" onclick="submit_delete_group_form()">
-          <img src="{{ url_for('static', filename='images/back.png') }}" onclick="close_modals()">
-          -->
-
           <input type="button" value="OK" onclick="submit_delete_group_form()">
           <input type="button" value="Cancel" onclick="close_modals()">
-
-
         </div>
       </div>
     </div>
