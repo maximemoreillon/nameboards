@@ -17,11 +17,12 @@
         {% endfor %}
       </select>
 
-      <div class="controls">
+      <div class="bottom_controls_cluster">
         <input type="button" value="Select" onclick="select_group()">
         <input type="button" value="Create new" onclick="open_create_group_modal()">
         <input type="button" value="Delete" onclick="open_delete_group_modal()">
       </div>
+
     </div> <!-- End of main -->
 
     {% include 'partials/footer.html' %}
@@ -44,7 +45,7 @@
         <form id="create_group_form" action="select_group" method="post">
           <input type="text" name="group_name" placeholder="New group name">
         </form>
-        <div class="controls">
+        <div class="bottom_controls_cluster">
           <input type="button" value="OK" onclick="submit_create_group_form()">
           <input type="button" value="Cancel" onclick="close_modals()">
         </div>
@@ -57,7 +58,7 @@
     <div class="modal_content">
       <div class="modal_header"> Confirm delete group? </div>
       <div class="modal_main">
-        <div class="controls">
+        <div class="bottom_controls_cluster">
           <input type="button" value="OK" onclick="submit_delete_group_form()">
           <input type="button" value="Cancel" onclick="close_modals()">
         </div>

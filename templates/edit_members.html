@@ -8,12 +8,12 @@
 
     <div class="header">
       <div class="title_wrapper"> {{group_name}} </div>
-      <div class="left_corner">
-        <img class="desktop" src="{{ url_for('static', filename='images/icons/pencil-off.png') }}" onclick="window.location.href='/';">
+      <div class="top_left_controls_cluster">
+        <input type="image" src="{{ url_for('static', filename='images/icons/pencil-off.png') }}" onclick="window.location.href='/';">
       </div>
-
     </div>
 
+    <!-- Shows the members name -->
     <div class="main">
       <table id="members_table">
         {% for member in members %}
@@ -26,8 +26,9 @@
       </table>
     </div>
 
-    <div class="controls">
-      <img class="desktop" src="{{ url_for('static', filename='images/icons/account-plus.png') }}" onclick="submit_add_member_form()">
+    <!-- Controls, to add a member -->
+    <div class="bottom_controls_cluster">
+      <input type="image" src="{{ url_for('static', filename='images/icons/account-plus.png') }}" onclick="submit_add_member_form()">
     </div>
 
 
@@ -37,7 +38,6 @@
 
   <!-- Form to add a member, submitted using JS -->
   <form id="add_member_form" action="add_member" method="post" style="display:none;">
-
   </form>
 
   <!-- Form to delete one member -->

@@ -1,59 +1,52 @@
-/* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: absolute; /* Fixed does not work in old IE versins */
-    z-index: 1; /* Sit on top */
+  display: none; /* Hidden by default */
+  position: absolute; /* Fixed does not work in old IE versins */
+  z-index: 1; /* Sit on top */
 
-    left: 0;
-    top: 0;
+  left: 0;
+  top: 0;
 
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
 
-    overflow: auto; /* Enable scroll if needed */
+  overflow: auto; /* Enable scroll if needed */
 
-    background-color: rgb(60,60,60); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgb(60,60,60); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 
-    animation-name: modal_background_animation;
-    animation-duration: 0.4s
+  animation-name: modal_background_animation;
+  animation-duration: 0.4s;
 }
 
 @keyframes modal_background_animation {
-  from {
-    opacity:0;
-  }
-  to {
-    opacity:1;
-  }
+  from { opacity:0; }
+  to { opacity:1; }
 }
 
 
-
-/* Modal Content/Box */
 .modal_content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
 
+  width: 50%;
 
-    width: 50%;
+  margin: 15% auto;
+  padding: 20px;
 
-    border-radius:10px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  text-align: center;
 
-    animation-name: open_animation;
-    animation-duration: 200ms
+  /* Visuals */
+  background-color: #fefefe;
+  border-radius:10px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+
+  /* Animation */
+  animation-name: modal_open_animation;
+  animation-duration: 200ms
 }
 
 
-@keyframes open_animation {
-  from {
-    opacity:0;
-  }
-  to {
-    opacity:1;
-  }
+@keyframes modal_open_animation {
+  from { opacity:0; }
+  to { opacity:1; }
 }
 
 .modal_header {

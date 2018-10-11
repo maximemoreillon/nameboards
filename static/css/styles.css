@@ -1,100 +1,83 @@
 body{
-  font-family: Calibri;
-
+  margin: 0;
   background-color: #cccccc;
 
-  margin: 0;
-
-  /* to center the wrapper in old browsers */
-  text-align: center;
-
+  font-family: Calibri;
 }
 
 .wrapper {
 
+  /* Positioning and sizing */
   width: 70%;
-
-  background-color: white;
   margin-left: auto;
   margin-right: auto;
   margin: 25px auto;
 
+  /* Content positioning and sizing */
   padding: 25px;
+  text-align: center;
 
+  /* Misc visuals */
+  background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  border-radius:10px;
-
-
+  border-radius: 10px;
 }
 
 
-/* Header related */
 .header{
   /* set position relative for inner divs absolute */
   position: relative;
 
   /* Fixing position absolute not respected by IE5 */
   text-align: left;
-
 }
 
-.header .left_corner, .header .right_corner{
+.top_left_controls_cluster, .top_right_controls_cluster{
   /* Weird stuff because of IE */
   text-align: left;
-
   position: absolute;
   top: 0;
 }
 
-.header .left_corner{
+.top_left_controls_cluster{
+  /* Positioining the cluster */
   left: 0;
 }
 
-.header .right_corner{
+.top_right_controls_cluster{
+  /* Positioining the cluster */
   right: 0;
 }
 
-.header img, .controls img{
-
-  width: 40px;
-  height: 40px;
-
-  padding: 10px;
-
-  cursor: pointer;
-  border-radius:10px;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-}
-
-.header img:hover, .controls img:hover{
-
-  background-color: #cccccc;
-}
-
-.left_corner img {
-  /* set distance between buttons */
-  margin-right: 10px;
-}
-
-.right_corner img {
-  /* set distance between buttons */
-  margin-left: 10px;
-}
-
-.controls img{
-  margin-right: 10px;
-  margin-left: 10px;
-}
-
-.controls{
+.bottom_controls_cluster_cluster{
   margin-top: 25px;
 }
 
-.board{
+
+.top_left_controls_cluster input[type="image"] {
+  /* set distance between buttons */
+  margin-right: 10px;
+}
+
+.top_right_controls_cluster input[type="image"] {
+  /* set distance between buttons */
+  margin-left: 10px;
+}
+
+.bottom_controls_cluster input[type="button"]{
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+
+
+.board_button{
+  /* Hiding items visible only in board mode */
   display: none;
 }
 
-.desktop{
+.desktop_button{
+  /* Showing items visible in desktop mode */
   display: inline-block;
 }
 
@@ -109,7 +92,11 @@ body{
 }
 
 
+/* Related to main */
+
 .main {
+
+  /* Positioning and sizing */
   width: 100%;
   margin-left:auto;
   margin-right:auto;
@@ -130,7 +117,7 @@ table {
 
   font-size: 30px;
 
-  border-radius:10px;
+  border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 
 

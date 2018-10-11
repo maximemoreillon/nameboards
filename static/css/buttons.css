@@ -1,6 +1,25 @@
+/* Icon style buttons */
+
+input[type="image"]{
+
+  width: 40px;
+  height: 40px;
+
+  padding: 10px;
+
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+input[type="image"]:hover{
+  background-color: #cccccc;
+}
+
+/* Button style buttons */
 button, input[type="button"], input[type="submit"] {
 
-  border-radius:10px;
+  border-radius: 10px;
   padding: 10px;
 
   border: 2px solid #666666;
@@ -29,7 +48,10 @@ button:active, input[type="button"]:active, input[type="submit"]:active {
   background-color: #666666;
 }
 
+/* Select */
+
 select {
   width: 60%;
   height: 50px;
+  border-radius: 10px;
 }
