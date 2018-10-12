@@ -1,3 +1,7 @@
+:root {
+    --border_radius: 10px;
+}
+
 body{
   margin: 0;
   background-color: #cccccc;
@@ -20,7 +24,7 @@ body{
   /* Misc visuals */
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  border-radius: 10px;
+  border-radius: var(--border_radius);
 }
 
 
@@ -49,7 +53,7 @@ body{
   right: 0;
 }
 
-.bottom_controls_cluster_cluster{
+.bottom_controls_cluster{
   margin-top: 25px;
 }
 
@@ -117,7 +121,7 @@ table {
 
   font-size: 30px;
 
-  border-radius: 10px;
+  border-radius: var(--border_radius);
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 
 
@@ -128,15 +132,19 @@ table {
 }
 
 th, td {
-  border-radius:10px;
-  border: 1px solid #cccccc;
 
   padding: 10px;
-  background-color: white;
+  height: 10px;
+  overflow: hidden;
+
+  /* Misc visuals */
   color: black;
+  background-color: white;
+  border-radius: var(--border_radius);
+  border: 1px solid #cccccc;
 }
 
-.member_name_cell, .arrival_cell, .location_cell {
+td {
   cursor: pointer;
 }
 
@@ -146,10 +154,12 @@ th, td {
 }
 
 .absent {
+  /* When the member is absent, set red background */
   background-color: #ce0000;
   color: white;
 }
 
+/* MIGHT PUT THIS SOMEWHERE ELSE */
 input[type="text"], input[type="time"], input[type="search"], select {
   font-size: 20px;
   padding: 10px;
