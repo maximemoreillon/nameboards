@@ -40,20 +40,26 @@
       <table id="members_table">
 
         <tr>
-          <th>出社</th>
-          <th>名前</th>
-          <th>行先</th>
+          <th class="arrival_header">出社</th>
+          <th class="member_name_header" >名前</th>
+          <th class="location_header">行先</th>
           <th style="display:none;">Presence</th>
         </tr>
 
         {% for member in members %}
         <tr id="{{member[0]}}">
-          <td class="arrival_cell" onclick="open_arrival_edit_modal(this)">{{member[5]}}</td>
+          <td class="arrival_cell" onclick="open_arrival_edit_modal(this)">
+            {{member[5]}}
+          </td>
           <td class="member_name_cell {% if member[3]==0 %}absent{% endif %}" onclick="toggle_presence(this)">
             {{member[1]}}
           </td>
-          <td class="location_cell" onclick="open_location_edit_modal(this)">{{member[4]}}</td>
-          <td class="presence_cell" style="display:none;"> {{member[3]}}</td> <!--presence_cell-->
+          <td class="location_cell" onclick="open_location_edit_modal(this)">
+            {{member[4]}}
+          </td>
+          <td class="presence_cell" style="display:none;">
+            {{member[3]}}
+          </td> <!--presence_cell-->
         </tr>
         {% endfor %}
 

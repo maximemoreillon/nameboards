@@ -102,23 +102,29 @@ table {
   margin-right:auto;
 
   text-align: center;
+  font-size: 30px;
+
+  table-layout: fixed;
 
   border-collapse: separate;
   border-spacing: 5px;
-
-  font-size: 30px;
-
   border-radius: var(--border_radius);
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
-.arrival_cell, .location_cell {
-  width: 33%;
+.arrival_header {
+  width: 20%;
 }
 
+.member_name_header {
+  width: 30%;
+}
 
 th, td {
   padding: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+
 
   /* Misc visuals */
   color: black;
@@ -129,11 +135,16 @@ th, td {
 
 td {
   cursor: pointer;
+
 }
 
 .member_name_cell {
   /* The animation for the cell becoming red */
   transition: background-color 200ms linear, color 200ms linear;
+}
+
+.location_cell {
+  font-size: 25px;
 }
 
 .absent {

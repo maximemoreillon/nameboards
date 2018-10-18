@@ -38,6 +38,11 @@ table {
 }
 
 
+.location_cell {
+  font-size: 80px;
+}
+
+
 .footer {
   display: none;
 }
