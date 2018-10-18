@@ -1,21 +1,13 @@
-/* Icon style buttons */
-
-input[type="image"]{
-
-  width: 40px;
-  height: 40px;
-
-  padding: 10px;
-
-  background-color: white;
-  border-radius: var(--border_radius);
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+/* Buttons (actually links) with icons in them */
+.icon_button{
+  /* this is a a */
 }
 
-input[type="image"]:hover{
-  background-color: #cccccc;
+.icon_button img{
+  border: none;
 }
 
+/* Those are the buttons with text in them */
 /* Button style buttons */
 button, input[type="button"], input[type="submit"] {
 
@@ -33,14 +25,10 @@ button, input[type="button"], input[type="submit"] {
   font-size: 20px;
 
   transition: background-color 100ms linear, color 50ms linear;
-
-  margin-top: 10px;
 }
 
 button:hover, input[type="button"]:hover, input[type="submit"]:hover {
-
   background-color: #cccccc;
-
 }
 
 button:active, input[type="button"]:active, input[type="submit"]:active {
@@ -49,7 +37,6 @@ button:active, input[type="button"]:active, input[type="submit"]:active {
 }
 
 /* Select */
-
 select {
   width: 60%;
   height: 50px;

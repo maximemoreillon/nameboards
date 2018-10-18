@@ -2,19 +2,24 @@
     --border_radius: 10px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body{
   margin: 0;
   background-color: #cccccc;
 
   font-family: Calibri;
+
+  /* IE bug */
+  text-align: center;
 }
 
 .wrapper {
 
   /* Positioning and sizing */
   width: 70%;
-  margin-left: auto;
-  margin-right: auto;
   margin: 25px auto;
 
   /* Content positioning and sizing */
@@ -58,23 +63,6 @@ body{
 }
 
 
-.top_left_controls_cluster input[type="image"] {
-  /* set distance between buttons */
-  margin-right: 10px;
-}
-
-.top_right_controls_cluster input[type="image"] {
-  /* set distance between buttons */
-  margin-left: 10px;
-}
-
-.bottom_controls_cluster input[type="button"]{
-  margin-right: 10px;
-  margin-left: 10px;
-}
-
-
-
 .board_button{
   /* Hiding items visible only in board mode */
   display: none;
@@ -99,7 +87,6 @@ body{
 /* Related to main */
 
 .main {
-
   /* Positioning and sizing */
   width: 100%;
   margin-left:auto;
@@ -131,11 +118,10 @@ table {
   width: 33%;
 }
 
-th, td {
 
+th, td {
   padding: 10px;
-  height: 10px;
-  overflow: hidden;
+
 
   /* Misc visuals */
   color: black;

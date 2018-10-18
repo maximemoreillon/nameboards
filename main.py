@@ -109,7 +109,7 @@ def edit_members():
         return redirect(url_for('select_group'))
 
 
-@app.route('/add_member', methods=['POST'])
+@app.route('/add_member', methods=['GET'])
 def add_member():
     if 'group_name' in session:
         group_name = session['group_name']

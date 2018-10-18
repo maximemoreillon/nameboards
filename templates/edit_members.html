@@ -9,7 +9,9 @@
     <div class="header">
       <div class="title_wrapper"> {{group_name}} </div>
       <div class="top_left_controls_cluster">
-        <input type="image" src="{{ url_for('static', filename='images/icons/pencil-off.png') }}" onclick="window.location.href='/';">
+        <a class="icon_button" href="/">
+          <img src="{{ url_for('static', filename='images/icons/pencil-off.png') }}">
+        </a>
       </div>
     </div>
 
@@ -28,17 +30,15 @@
 
     <!-- Controls, to add a member -->
     <div class="bottom_controls_cluster">
-      <input type="image" src="{{ url_for('static', filename='images/icons/account-plus.png') }}" onclick="submit_add_member_form()">
+      <a class="icon_button" href="add_member">
+        <img src="{{ url_for('static', filename='images/icons/account-plus.png') }}">
+      </a>
     </div>
 
 
     {% include 'partials/footer.html' %}
 
   </div> <!-- end of wrapper -->
-
-  <!-- Form to add a member, submitted using JS -->
-  <form id="add_member_form" action="add_member" method="post" style="display:none;">
-  </form>
 
   <!-- Form to delete one member -->
   <form id="delete_member_form" action="delete_member" method="post" style="display:none;">

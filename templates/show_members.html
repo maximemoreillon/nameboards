@@ -17,14 +17,22 @@
       <div class="title_wrapper"> {{group_name}} </div>
 
       <div class="top_left_controls_cluster">
-        <input type="image" class="desktop_button" src="{{ url_for('static', filename='images/icons/arrow-left.png') }}"  onclick="window.location.href='select_group'">
-        <input type="image" class="desktop_button" src="{{ url_for('static', filename='images/icons/pencil.png') }}"  onclick="window.location.href='edit_members'">
-        <input type="image" class="board_button" src="{{ url_for('static', filename='images/icons/fullscreen-exit.png') }}"  onclick="window.location.href='?'">
-        <input type="image" class="desktop_button" src="{{ url_for('static', filename='images/icons/fullscreen.png') }}"  onclick="window.location.href='?board'">
+        <a class="icon_button desktop_button" href="select_group">
+          <img src="{{ url_for('static', filename='images/icons/arrow-left.png') }}">
+        </a>
+        <a class="icon_button desktop_button" href="edit_members">
+          <img src="{{ url_for('static', filename='images/icons/pencil.png') }}">
+        </a>
+        <a class="icon_button desktop_button" href="?board">
+          <img src="{{ url_for('static', filename='images/icons/fullscreen.png') }}">
+        </a>
+        <a class="icon_button board_button" href="?">
+          <img src="{{ url_for('static', filename='images/icons/fullscreen-exit.png') }}">
+        </a>
       </div>
 
       <div class="top_right_controls_cluster">
-
+        <!-- Nothing -->
       </div>
     </div>
 
